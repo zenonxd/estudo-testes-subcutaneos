@@ -17,6 +17,10 @@ public class PlanetController {
     @Autowired
     private PlanetService planetService;
 
+    public PlanetController(PlanetService planetService) {
+        this.planetService = planetService;
+    }
+
     @PostMapping
     public ResponseEntity<Planet> create(@RequestBody @Valid Planet planet) {
         Planet createdPlanet = planetService.create(planet);
