@@ -5,10 +5,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.demo.swplanetapi.common.PlanetConstrants.TATOOINE;
 import static org.assertj.core.api.Assertions.*;
@@ -40,6 +44,47 @@ public class PlanetIT {
 
         assertThat(sut.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(sut.getBody()).isEqualTo(TATOOINE);
+    }
 
+    @Test
+    public void getPlanetByName_ReturnsPlanet() {
+        ResponseEntity<Planet> sut = restTemplate.getForEntity("/planets/name/" + TATOOINE.getName(), Planet.class);
+
+        assertThat(sut.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(sut.getBody()).isEqualTo(TATOOINE);
+    }
+
+    @Test
+    public void listPlanets_ReturnsAllPlanets() {
+        ResponseEntity<Planet[]> sut = restTemplate.getForEntity("/planets", Planet[].class);
+
+        assertThat(sut.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(sut.getBody()).hasSize(3);
+        assertThat(sut.getBody()[0]).isEqualTo(TATOOINE);
+    }
+
+    @Test
+    public void listPlanets_ByClimate_ReturnsPlanets() {
+        ResponseEntity<Planet[]> sut = restTemplate.getForEntity("/planets?climate=" + TATOOINE.getClimate(), Planet[].class);
+
+        assertThat(sut.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(sut.getBody()).hasSize(1);
+        assertThat(sut.getBody()[0]).isEqualTo(TATOOINE);
+    }
+
+    @Test
+    public void listPlanets_ByTerrain_ReturnsPlanets() {
+        ResponseEntity<Planet[]> sut = restTemplate.getForEntity("/planets?terrain=" + TATOOINE.getTerrain(), Planet[].class);
+
+        assertThat(sut.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(sut.getBody()).hasSize(1);
+        assertThat(sut.getBody()[0]).isEqualTo(TATOOINE);
+    }
+
+    @Test
+    public void removePlanet_ReturnsNoContent() {
+        ResponseEntity<Void> sut = restTemplate.exchange("/planets/" + TATOOINE.getId(), HttpMethod.DELETE, null, Void.class);
+
+        assertThat(sut.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
     }
 }

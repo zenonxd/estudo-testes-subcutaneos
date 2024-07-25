@@ -237,6 +237,117 @@ Podemos ver então se o body do sut é igual a variável que estamos testando, n
 
 ## Exercício - Testando consulta por nome, listagem e remoção de planeta
 
+### Consulta Por Nome
+
+Igual a consulta de cima, a diferença é aqui aqui temos o /name, para especificar o planeta.
+
+```java
+    @Test
+    public void getPlanetByName_ReturnsPlanet() {
+        ResponseEntity<Planet> sut = restTemplate.getForEntity("/planets/name/" + TATOOINE.getName(), Planet.class);
+
+        assertThat(sut.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(sut.getBody()).isEqualTo(TATOOINE);
+    }
+```
+<hr>
+
+## Consulta de planeta em listagem (all, climate e terrain)
+
+Aqui, fizemos um ajuste. Para chamar o getForEntity, especificamos que chamaremos um Array de objeto Planet.
+
+Unica diferença do all para climate e terrain, é que o retorno do array será somente 1 planeta, como pode ser visto no
+hasSize().
+```java
+    @Test
+    public void listPlanets_ReturnsAllPlanets() {
+        ResponseEntity<Planet[]> sut = restTemplate.getForEntity("/planets", Planet[].class);
+
+        assertThat(sut.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(sut.getBody()).hasSize(3);
+        assertThat(sut.getBody()[0]).isEqualTo(TATOOINE);
+    }
+
+    @Test
+    public void listPlanets_ByClimate_ReturnsPlanets() {
+        ResponseEntity<Planet[]> sut = restTemplate.getForEntity("/planets?climate=" + TATOOINE.getClimate(), Planet[].class);
+    
+        assertThat(sut.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(sut.getBody()).hasSize(1);
+        assertThat(sut.getBody()[0]).isEqualTo(TATOOINE);
+    }
+    
+    @Test
+    public void listPlanets_ByTerrain_ReturnsPlanets() {
+        ResponseEntity<Planet[]> sut = restTemplate.getForEntity("/planets?terrain=" + TATOOINE.getTerrain(), Planet[].class);
+    
+        assertThat(sut.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(sut.getBody()).hasSize(1);
+        assertThat(sut.getBody()[0]).isEqualTo(TATOOINE);
+    }
+```
+<hr>
+
+## Delete por ID
+
+Aqui tivemos um ajuste. No restTemplate possuímos vários métodos Http, mas quando usamos delete, se retorna um **void**.
+
+Para que possamos verificar o código retornado, usamos um método genérico, o **exchange**. Nós passamos os parâmetros
+para que ele faça uma chamada Http e retorne uma ResponseEntity (mesmo que seja void, que é o nosso caso).
+
+Passamos: ``1º a url + o id do planeta, 2º verbo http (o delete),3º null (n precisa passar requestEntity, a requisição
+não terá nenhuma informação passada no corpo dela, 4º Void.Class (responseType), corpo de resposta vazio, como pode ver
+em <Void> sut 👇) ``
+```java
+    @Test
+    public void removePlanet_ReturnsNoContent() {
+        ResponseEntity<Void> sut = restTemplate.exchange("/planets/" + TATOOINE.getId(), HttpMethod.DELETE, null, Void.class);
+
+        assertThat(sut.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+    }
+```
+<hr>
+
+## WebTestClient
+
+No Spring 5, foi introduzido um cliente web reativo (parte do módulo Webflux), o WebClient, e sua versão para testes, 
+o WebTestClient. Ele surgiu como um substituto para o RestTemplate, pois utiliza uma abordagem não bloqueante para fazer 
+requisições e ainda permite utilizar uma linguagem fluente, bem mais tranquila de entender.
+
+### Usando TestRestTemplate
+```java
+@Test
+public void createPlanet_ReturnsCreated() {
+  ResponseEntity<Planet> sut = 
+    restTemplate.postForEntity("/planets", PLANET, Planet.class);
+ 
+  assertThat(sut.getStatusCode()).isEqualTo(HttpStatus.CREATED);
+  assertThat(sut.getBody().getId()).isNotNull();
+  assertThat(sut.getBody().getName()).isEqualTo(PLANET.getName());
+  // Omitidos por simplicidade
+}
+```
+Observe que o método postForEntity recebe vários parâmetros para fazer uma requisição post para o serviço web que 
+estamos testando. Agora olha a versão com o WebTestClient:
+<hr>
+
+###  WebTestClient
+
+```java
+@Test
+public void createPlanet_ReturnsCreated() {
+  Planet sut = webTestClient.post().uri("/planets").bodyValue(PLANET)
+    .exchange().expectStatus().isCreated().expectBody(Planet.class)
+    .returnResult().getResponseBody();
+ 
+  assertThat(sut.getId()).isNotNull();
+  assertThat(sut.getName()).isEqualTo(PLANET.getName());
+  // Omitidos por simplicidade
+}
+```
+A requisição é construída de forma fluente, onde cada parâmetro é informado num método específico que o utiliza, 
+trazendo uma espécie de semântica melhor à requisição HTTP.
+<hr>
 
 # Resumo
 
