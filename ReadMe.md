@@ -11,7 +11,24 @@ Durante o estudo, os códigos mudam pois geralmente é ensinado algo básico ond
 ## Tópicos
 
 
-
+* [Introdução](#introdução)
+  * [Configuração do servidor de aplicação](#configuração-do-servidor-de-aplicação)
+  * [Configuração do banco MySQL: profiles de teste](#configuração-do-banco-mysql-profiles-de-teste)
+  * [Testando cadastro de usuário com sucesso](#testando-cadastro-de-usuário-com-sucesso)
+    * [Primeiro caso de uso - Criação de planeta](#primeiro-caso-de-uso---criação-de-planeta)
+  * [Configurando rollback para os testes](#configurando-rollback-para-os-testes)
+    * [Como limpar depois de cada teste o que foi inserido no banco de dados?](#como-limpar-depois-de-cada-teste-o-que-foi-inserido-no-banco-de-dados)
+  * [Testando consulta de planeta com sucesso](#testando-consulta-de-planeta-com-sucesso)
+* [Exercícios](#exercícios)
+  * [Exercício - Testando consulta por nome, listagem e remoção de planeta](#exercício---testando-consulta-por-nome-listagem-e-remoção-de-planeta)
+    * [Consulta Por Nome](#consulta-por-nome)
+  * [Consulta de planeta em listagem (all, climate e terrain)](#consulta-de-planeta-em-listagem-all-climate-e-terrain)
+  * [Delete por ID](#delete-por-id)
+  * [WebTestClient](#webtestclient)
+    * [Usando TestRestTemplate](#usando-testresttemplate)
+    * [WebTestClient](#webtestclient-1)
+* [Resumo](#resumo)
+  * [Fim](#fim)
 
 <hr>
 
@@ -351,10 +368,19 @@ trazendo uma espécie de semântica melhor à requisição HTTP.
 
 # Resumo
 
-Chama o restTemplate, obtém o resultado da requisição e depois verifica o que você quer (seja status de resposta ou corpo).
-
-
+- Mais segurança nos testes;
+- Não usa Mocks;
+- Não tem vários cenários de teste;
+- Usamos cenário real: tomcat + banco mySQL.
 <hr>
 
-## Fim
+- Lembrar de [configurar o servidor de aplicação](#configuração-do-servidor-de-aplicação);
+- [Configurar o banco mySQl pois não será mais H2](#configuração-do-banco-mysql-profiles-de-teste);
+- [Lembrar de configurar cenários rollback](#configurando-rollback-para-os-testes);
+
+## Nos métodos:
+
+Chama o restTemplate, obtém o resultado da requisição e depois verifica o que você quer (seja status de resposta ou corpo).
+
+<hr>
 

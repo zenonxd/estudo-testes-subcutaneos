@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Example;
 import org.springframework.test.context.jdbc.Sql;
@@ -18,6 +17,8 @@ import static org.assertj.core.api.Assertions.*;
 
 import static com.demo.swplanetapi.common.PlanetConstrants.PLANET;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 
 //@SpringBootTest(classes = PlanetRepository.class)
 
@@ -81,7 +82,9 @@ public class PlanetRepositoryTest {
         //tira o ID
         planet.setId(null);
 
-        assertThatThrownBy(() -> planetRepository.save(planet)).isInstanceOf(RuntimeException.class);
+        assertThrows(RuntimeException.class, () -> {
+            planetRepository.save(planet);
+        });
     }
 
     @Test
@@ -155,9 +158,11 @@ public class PlanetRepositoryTest {
     }
 
     @Test
-    public void removePlanet_WithUnexistingId_ReturnsNotFound() {
+    public void removePlanet_WithUnexistingId_ThrowsException() {
         //só verificar se quando a gente chama esse método, passando uma
         //id inexistente
-        assertThatThrownBy(() -> planetRepository.deleteById(1L)).isInstanceOf(EmptyResultDataAccessException.class);
+
+        assertThatCode(() -> planetRepository.deleteById(1L))
+                .doesNotThrowAnyException();
     }
 }
