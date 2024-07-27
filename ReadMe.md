@@ -381,6 +381,5 @@ trazendo uma espécie de semântica melhor à requisição HTTP.
 ## Nos métodos:
 
 Chama o restTemplate, obtém o resultado da requisição e depois verifica o que você quer (seja status de resposta ou corpo).
-
 <hr>
 

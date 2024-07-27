@@ -130,7 +130,6 @@ public class PlanetRepositoryTest {
         assertThat(responseWithFilters).isNotEmpty();
         assertThat(responseWithFilters).hasSize(1);
         assertThat(responseWithFilters.get(0)).isEqualTo(TATOOINE);
-
     }
 
     @Test
