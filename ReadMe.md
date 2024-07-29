@@ -1,3 +1,16 @@
+<h1 align="center">
+  StarWars Planet API (sw-planet-api)
+</h1>
+
+<p align="center">
+  <a href="#-technologies">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-introdução">Introdução</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/static/v1?label=Curso na Udemy&message=Testes automatizados na prática com Spring Boot&color=8257E5&labelColor=000000" alt="Testes automatizados na prática com Spring Boot" />
+</p>
+
 # Estudo Testes Subcutâneos
 
 ## Referência: Testes automatizados na prática com Spring Boot
@@ -8,18 +21,37 @@
 Durante o estudo, os códigos mudam pois geralmente é ensinado algo básico onde depois iremos implementar o que de fato
 é utilizado no mercado de trabalho. Tome cuidado ao considerar códigos do início do estudo, se atente ao código final.
 
+## ✨ Technologies
+
+- [Mysql](https://dev.mysql.com/downloads/mysql/)
+- [Java](https://www.oracle.com/java/technologies/downloads/)
+- [Maven](https://maven.apache.org/download.cgi)
+- [Spring Boot](https://spring.io/projects/spring-boot)
+- [Spring Testing](https://docs.spring.io/spring-framework/docs/current/reference/html/testing.html#testing-introduction)
+- [JUnit 5](https://junit.org/junit5/docs/current/user-guide/)
+- [Mockito](https://site.mockito.org)
+- [AssertJ](https://github.com/assertj/assertj)
+- [Hamcrest](http://hamcrest.org/JavaHamcrest/)
+- [Jacoco](https://github.com/jacoco/jacoco)
+- [Pitest](https://pitest.org)
+
 ## Tópicos
 
-
-* [Introdução](#introdução)
-  * [Configuração do servidor de aplicação](#configuração-do-servidor-de-aplicação)
-  * [Configuração do banco MySQL: profiles de teste](#configuração-do-banco-mysql-profiles-de-teste)
-  * [Testando cadastro de usuário com sucesso](#testando-cadastro-de-usuário-com-sucesso)
+<!-- TOC -->
+* [Estudo Testes Subcutâneos](#estudo-testes-subcutâneos)
+  * [Referência: Testes automatizados na prática com Spring Boot](#referência-testes-automatizados-na-prática-com-spring-boot)
+  * [Dica para leitura:](#dica-para-leitura)
+  * [✨ Technologies](#-technologies)
+  * [Tópicos](#tópicos)
+* [💻 Introdução](#-introdução)
+  * [🛠️ Configuração do servidor de aplicação](#-configuração-do-servidor-de-aplicação)
+  * [🛠️ Configuração do banco MySQL: profiles de teste](#-configuração-do-banco-mysql-profiles-de-teste)
+  * [🧪 Testando cadastro de usuário com sucesso](#-testando-cadastro-de-usuário-com-sucesso)
     * [Primeiro caso de uso - Criação de planeta](#primeiro-caso-de-uso---criação-de-planeta)
-  * [Configurando rollback para os testes](#configurando-rollback-para-os-testes)
-    * [Como limpar depois de cada teste o que foi inserido no banco de dados?](#como-limpar-depois-de-cada-teste-o-que-foi-inserido-no-banco-de-dados)
-  * [Testando consulta de planeta com sucesso](#testando-consulta-de-planeta-com-sucesso)
-* [Exercícios](#exercícios)
+  * [🛠️ Configurando rollback para os testes](#-configurando-rollback-para-os-testes)
+    * [❓ Como limpar depois de cada teste o que foi inserido no banco de dados?](#-como-limpar-depois-de-cada-teste-o-que-foi-inserido-no-banco-de-dados)
+  * [️🛠️ Testando consulta de planeta com sucesso](#-testando-consulta-de-planeta-com-sucesso)
+* [✅ Exercícios](#-exercícios)
   * [Exercício - Testando consulta por nome, listagem e remoção de planeta](#exercício---testando-consulta-por-nome-listagem-e-remoção-de-planeta)
     * [Consulta Por Nome](#consulta-por-nome)
   * [Consulta de planeta em listagem (all, climate e terrain)](#consulta-de-planeta-em-listagem-all-climate-e-terrain)
@@ -27,13 +59,14 @@ Durante o estudo, os códigos mudam pois geralmente é ensinado algo básico ond
   * [WebTestClient](#webtestclient)
     * [Usando TestRestTemplate](#usando-testresttemplate)
     * [WebTestClient](#webtestclient-1)
-* [Resumo](#resumo)
-  * [Fim](#fim)
+* [📖 Resumo](#-resumo)
+<!-- TOC -->
+
 
 <hr>
 
 
-# Introdução
+# 💻 Introdução
 
 Aqui trabalharemos com teste de componente e end-to-end.
 
@@ -51,7 +84,7 @@ o essencial está funcionando.
 
 <hr>
 
-## Configuração do servidor de aplicação
+## 🛠️ Configuração do servidor de aplicação
 
 Atualmente os nossos testes rodam em um servidor mockado. Agora, criaremos um teste que utilize um servidor real.
 
@@ -88,7 +121,7 @@ e para não dar conflito, usaremos uma aleatoria, veja:
 ``@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)``.
 <hr>
 
-## Configuração do banco MySQL: profiles de teste
+## 🛠️ Configuração do banco MySQL: profiles de teste
 
 Faremos agora essa classe utilizar o banco MySQL e não o H2.
 
@@ -119,7 +152,7 @@ spring.datasource.password=${MYSQL_PASSWORD:senha}
 ```
 <hr>
 
-## Testando cadastro de usuário com sucesso
+## 🧪 Testando cadastro de usuário com sucesso
 
 Agora, implementaremos os testes subcutâneos. Como são testes do topo da piramide, só trabalharemos com cenários de 
 sucesso.
@@ -195,13 +228,13 @@ public class PlanetIT {
 ```
 <hr>
 
-## Configurando rollback para os testes
+## 🛠️ Configurando rollback para os testes
 
 Se rodarmos o código acima duas vezes, irá dar um erro. Porque o planeta que queremos já foi criado.
 
 A gente não pode persistir dados de forma fixa no banco. Isso deixa os testes frágeis.
 
-### Como limpar depois de cada teste o que foi inserido no banco de dados?
+### ❓ Como limpar depois de cada teste o que foi inserido no banco de dados?
 
 Usaremos um script de dados, que irá limpar (truncar) a tabela de planetas após cada execução de testes.
 
@@ -220,7 +253,7 @@ Poderia ser antes de cada teste ou depois também. Depois de criar o planeta, el
 quantas vezes quisermos.
 <hr>
 
-## Testando consulta de planeta com sucesso
+## ️🛠️ Testando consulta de planeta com sucesso
 
 Aqui teremos uma consulta de planeta por ID. Será semelhante ao teste acima, porém com umas coisas a mais.
 
@@ -250,7 +283,7 @@ Podemos ver então se o body do sut é igual a variável que estamos testando, n
 <hr>
 
 
-# Exercícios
+# ✅ Exercícios
 
 ## Exercício - Testando consulta por nome, listagem e remoção de planeta
 
@@ -366,20 +399,26 @@ A requisição é construída de forma fluente, onde cada parâmetro é informad
 trazendo uma espécie de semântica melhor à requisição HTTP.
 <hr>
 
-# Resumo
+# 📖 Resumo
 
-- Mais segurança nos testes;
-- Não usa Mocks;
-- Não tem vários cenários de teste;
-- Usamos cenário real: tomcat + banco mySQL.
-<hr>
+Lembrar que aqui testaremos a integração do controll, service e repository.
 
-- Lembrar de [configurar o servidor de aplicação](#configuração-do-servidor-de-aplicação);
-- [Configurar o banco mySQl pois não será mais H2](#configuração-do-banco-mysql-profiles-de-teste);
-- [Lembrar de configurar cenários rollback](#configurando-rollback-para-os-testes);
+Não teremos Mocks.
 
-## Nos métodos:
+Não teremos vários cenários de testes, somente o essencial.
+
+Usaremos cenário real: tomcat + banco mySQL.
+
+[Criar classe específica](#-configurando-rollback-para-os-testes) para os testes de integração.
+
+[Fazer a classe utilizar banco mySQL](#-configuração-do-banco-mysql-profiles-de-teste).
+
+Implementar [rollback](#-configurando-rollback-para-os-testes).
+
+Nos testes:
 
 Chama o restTemplate, obtém o resultado da requisição e depois verifica o que você quer (seja status de resposta ou corpo).
+
 <hr>
+
 
