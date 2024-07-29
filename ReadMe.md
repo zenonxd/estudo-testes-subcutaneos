@@ -43,22 +43,34 @@ Durante o estudo, os códigos mudam pois geralmente é ensinado algo básico ond
   * [Dica para leitura:](#dica-para-leitura)
   * [✨ Technologies](#-technologies)
   * [Tópicos](#tópicos)
+<hr>
+
 * [💻 Introdução](#-introdução)
-  * [🛠️ Configuração do servidor de aplicação](#-configuração-do-servidor-de-aplicação)
-  * [🛠️ Configuração do banco MySQL: profiles de teste](#-configuração-do-banco-mysql-profiles-de-teste)
-  * [🧪 Testando cadastro de usuário com sucesso](#-testando-cadastro-de-usuário-com-sucesso)
-    * [Primeiro caso de uso - Criação de planeta](#primeiro-caso-de-uso---criação-de-planeta)
+<hr>
+
+* [🛠️ Configuração do servidor de aplicação](#-configuração-do-servidor-de-aplicaçao)
+* [🛠️ Configuração do banco MySQL: profiles de teste](#-configuração-do-banco-mysql-profiles-de-teste)
+<hr>
+
+* [🧪 Testando cadastro de usuário com sucesso](#-testando-cadastro-de-usuário-com-sucesso)
+  * [Primeiro caso de uso - Criação de planeta](#primeiro-caso-de-uso---criação-de-planeta)
   * [🛠️ Configurando rollback para os testes](#-configurando-rollback-para-os-testes)
-    * [❓ Como limpar depois de cada teste o que foi inserido no banco de dados?](#-como-limpar-depois-de-cada-teste-o-que-foi-inserido-no-banco-de-dados)
-  * [️🛠️ Testando consulta de planeta com sucesso](#-testando-consulta-de-planeta-com-sucesso)
+  * [❓ Como limpar depois de cada teste o que foi inserido no banco de dados?](#-como-limpar-depois-de-cada-teste-o-que-foi-inserido-no-banco-de-dados) 
+<hr>
+
+* [️🛠️ Testando consulta de planeta com sucesso](#-testando-consulta-de-planeta-com-sucesso)
+<hr>
+
 * [✅ Exercícios](#-exercícios)
-  * [Exercício - Testando consulta por nome, listagem e remoção de planeta](#exercício---testando-consulta-por-nome-listagem-e-remoção-de-planeta)
+* [Exercício - Testando consulta por nome, listagem e remoção de planeta](#exercício---testando-consulta-por-nome-listagem-e-remoção-de-planeta)
     * [Consulta Por Nome](#consulta-por-nome)
   * [Consulta de planeta em listagem (all, climate e terrain)](#consulta-de-planeta-em-listagem-all-climate-e-terrain)
   * [Delete por ID](#delete-por-id)
   * [WebTestClient](#webtestclient)
     * [Usando TestRestTemplate](#usando-testresttemplate)
     * [WebTestClient](#webtestclient-1)
+<hr>
+
 * [📖 Resumo](#-resumo)
 <!-- TOC -->
 
