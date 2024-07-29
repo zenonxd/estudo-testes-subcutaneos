@@ -48,7 +48,7 @@ Durante o estudo, os códigos mudam pois geralmente é ensinado algo básico ond
 * [💻 Introdução](#-introdução)
 <hr>
 
-* [🛠️ Configuração do servidor de aplicação](#-configuração-do-servidor-de-aplicaçao)
+* [🛠️ Configuração do servidor de aplicação](#-configuração-do-servidor-de-aplicação)
 * [🛠️ Configuração do banco MySQL: profiles de teste](#-configuração-do-banco-mysql-profiles-de-teste)
 <hr>
 
